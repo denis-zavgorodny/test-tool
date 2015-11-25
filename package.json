@@ -1,0 +1,22 @@
+{
+  "name": "test-tool",
+  "version": "1.0.0",
+  "description": "Test Tool",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:denis-zavgorodny/test-tool.git"
+  },
+  "author": "Denis Zavgorodny",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/denis-zavgorodny/test-tool/issues"
+  },
+  "homepage": "https://github.com/denis-zavgorodny/test-tool",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}
