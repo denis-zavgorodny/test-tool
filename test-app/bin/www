@@ -3,10 +3,14 @@
 /**
  * Module dependencies.
  */
-
+var livereload = require('express-livereload');
 var app = require('../app');
 var debug = require('debug')('test-app:server');
 var http = require('http');
+
+var config = {};
+config.watchDir = process.cwd();
+livereload(app, config);
 
 /**
  * Get port from environment and store in Express.

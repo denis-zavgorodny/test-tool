@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html ng-app="AppTest">
+<head>
+	<title>Test</title>
+	<link href="stylesheets/style.css" rel="stylesheet" type="text/css">
+	<script src="javascripts/angular.min.js" type="text/javascript"></script>
+	<script src="javascripts/main.js" type="text/javascript"></script>
+</head>
+<body>
+	<div ng-controller="taskController" ng-model="tasks">
+		<div ng-repeat="task in tasks" class="task-wrapper">
+			<span class="remove" ng-click="removeURL($index);">[x]</span>
+			<input type="hidden" ng-model="task.uid">	
+			<div class="task-form-line">
+				<label>
+					<span>URL:</span>
+					<input type="text" ng-model="task.url">
+				</label>
+			</div>
+
+				
+			<div class="task-form-line">
+				<label  ng-controller="actionController">
+					<span>Action:</span>
+					<select ng-model="task.action" class="half">
+						<option  ng-selected="selected" ng-repeat="action in actions" value="{{action.value}}">{{action.name}}</option>
+					</select>
+				</label>
+			
+			
+				<label>
+					<span>Selector:</span>
+					<input type="text" class="half" ng-model="task.selector">
+				</label>
+			</div>
+		</div>
+		<input type="button" value="Add New" ng-click="addURL();">
+	</div>
+</body>
+</html>

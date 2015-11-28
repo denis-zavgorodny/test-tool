@@ -1,8 +1,69 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+.clear {
+	float: none;
+	clear: both;
+}
+.task-wrapper {
+	padding: 10px;
+	background: #D9F2FA;
+	margin: 0 0 20px;
+	position: relative;
+}
+.remove {
+	position: absolute;
+	cursor: pointer;
+	right: 10px;
+	top: 10px;
+}
+.remove:hover {
+	color: red;
+}
+button,
+input[type=submit],
+input[type=button] {
+	border: 1px solid #49A9C9;
+	color: #49A9C9;
+	background: #fff;
+	font-size: 16px;
+	padding: 5px 15px;
+	min-width: 200px;
+	cursor: pointer;
+}
+button:hover,
+input[type=submit]:hover,
+input[type=button]:hover {
+	background: #D9F2FA;
+}
+select,
+textarea,
+input[type=text] {
+	font-size: 16px;
+	padding: 5px 15px;
+	border: 1px solid #49A9C9;
+	width: 415px;
+}
+select.half,
+input.half {
+	width: 200px;	
+}
+.task-form-line {
+	display: block;
+	margin: 0 0 10px;
+}
+.task-form-line label {
+	display:-moz-inline-box; display:inline-block; *zoom: 1; *display:inline;
+	vertical-align: top;
+	margin: 0 10px 0 0;
+}
+.task-form-line label span {
+	display: block;
+	padding: 0 0 4px;
+	color: #206F8A;
 }
