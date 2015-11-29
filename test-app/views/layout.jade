@@ -1,8 +1,11 @@
 doctype html
-html
+html(ng-app="AppTest")
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='/javascripts/angular.min.js')
+    script(src='/javascripts/angular-websocket.min.js')
+    script(src='/javascripts/main.js')
     != LRScript
   body
     block content

@@ -2,7 +2,35 @@ extends layout
 
 block content
     h1= title
-    form(action="/" method="POST")
-        input(type="text")
-        input(type="submit" value="submit")
-    p Welcome to 7 #{title}
+    div(ng-controller="taskController" ng-model="tasks")
+        div(class="ready-light" ng-class="{active: socketState}")
+        ng-form(name="tasksForm")
+            input(type="hidden" ng-model="formid" ng-init="formid='#{formuid}'")
+            div(class="task-form-line")
+                input(type="button" ng-click="startTest();" value="Save and Run Tasks" ng-show="tasks.length")
+            div(ng-repeat="task in tasks" class="task-wrapper")
+                span(class="remove" ng-click="removeURL($index);") [x]
+                input(type="hidden" ng-model="task.uid")
+                div(class="task-form-line")
+                    label
+                        span URL:
+                        input(name="url_{{$index}}"
+                                type="text" 
+                                ng-model="task.url" 
+                                ng-pattern="/(http|https):\/\/(\\w+:{0,1}\\w*@)?(\\S+)(:[0-9]+)?(\/|\/([\\w#!:.?+=&%@!\-\/]))?/"
+                        )
+                div( 
+                    class="actions-layer" 
+                    ng-hide="tasksForm['url_{{$index}}'].$invalid"
+                )
+                    div(ng-repeat="_action in task.actions" class="task-form-line")
+                        label(ng-controller="actionController")
+                            span Action:
+                            select(ng-model="_action.type" class="half")
+                                option(ng-selected="selected" ng-repeat="action in actions" value="{{action.value}}") {{action.name}}
+                        label
+                            span Selector:
+                            input(type="text" class="half" ng-model="_action.selector")
+                        span(class="remove-inline" ng-click="removeAction($index, $parent.$index);") [Remove]
+                    a(href="" ng-click="addAction($index);") Add Action
+            input(type="button" value="Add New" ng-click="addURL();")   
