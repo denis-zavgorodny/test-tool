@@ -1,11 +1,8 @@
  module.exports.toolShoot = {
- 	shoot: function() {
+ 	shoot: function(url, tasks) {
 	 	var fs = require('fs');
 	  	var Spooky = require('spooky');
-	  	// var resemble = require('/Users/alterego/0_work/test-tool/test-app/phantom/node_modules/resemblejs/resemble.js');
-	  	// console.log(resemble);
 	  	var imageDiff = require('image-diff');
-	  	// var phantomcss = require('/Users/alterego/0_work/test-tool/test-app/phantom/phantomcss.js');
 
 		var spooky_instance = new Spooky(
 			{
@@ -14,14 +11,13 @@
 		        },
 				casper: {
 					logLevel: 'debug',
+					viewportSize: {
+						width: 800, 
+						height: 600
+					}
 		            // verbose: true
 				}
 			}, function (err) {
-				// NODE CONTEXT
-				
-		  		// phantomcss.init({
-		  		// 	casper: spooky_instance
-		  		// });	
 			  	imageDiff({
 					actualImage: 'weather.png',
 					expectedImage: 'weather1.png',
@@ -32,25 +28,57 @@
 				  // imagesAreSame is a boolean whether the images were the same or not 
 				  // diffImage will have an image which highlights differences 
 				});
-				spooky_instance.start('http://nic.ua/', function(){
+				// spooky_instance.start(url, function(){
 					
+				// });
+				spooky_instance.start(url, function(){
 				});
 				
-		        spooky_instance.then(function () {
-		            this.captureSelector('weather2.png', '.logo-img');
-
+				taskIteration(spooky_instance, tasks, 0);
+		        function taskIteration(spooky_instance, tasks, index) {
+		        	console.log(tasks.length, index);
+		        	if(tasks.length <= index)
+		        		return;
+		        	task = tasks[index];
+		        	console.log(task);
+		        	index++;
 		            
-	            	// this.emit('hello', 'Hello, from ' + this.evaluate(function () {
-		            //     return document.title;
-		            // }));
-				    
-		        });
+		            	switch(task.type) {
+							case "screenShoot":
+								var file_name = task.selector.toString().replace('.','').replace('#','') + '.png';
+								spooky_instance.then([{file_name: file_name, selector: task.selector}, function(){
+									if (this.exists(selector)) {
+								        this.captureSelector(file_name, selector);
+	                                	this.emit('onShootSuccess', {message: selector});
+								    } else {
+								    	this.emit('onShootError', 'Not found selector' + selector);
+								    }
+									
+						            // taskIteration(spooky_instance, tasks, index);
+					            }]);		
+					            
+								break;
+							default:
+								break;	
+						}
+			            
+			            
+			        
+		        }		
+				
+
+				
+				
+		        
 
 		        spooky_instance.run();
 			});
-		// spooky_instance.on('hello', function (greeting) {
-		//     console.log(greeting);
-		// });
+		spooky_instance.on('onShootSuccess', function (message) {
+		    console.log(message);
+		});
+		spooky_instance.on('onShootError', function (message) {
+		    console.log(message);
+		});
 
 		// spooky_instance.on('log', function (log) {
 		//     if (log.space === 'remote') {
