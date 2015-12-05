@@ -8,7 +8,7 @@ block content
             input(type="hidden" ng-model="formid" ng-init="formid='#{formuid}'")
             div(class="task-form-line")
                 input(type="button" ng-click="startTest();" value="Save and Run Tasks" ng-show="tasks.length")
-            div(ng-repeat="task in tasks" class="task-wrapper")
+            div(ng-repeat="task in tasks" class="task-wrapper" ng-class="{passive: task.status}")
                 span(class="remove" ng-click="removeURL($index);") [x]
                 input(type="hidden" ng-model="task.uid")
                 div(class="task-form-line")

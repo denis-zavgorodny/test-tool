@@ -34,8 +34,8 @@ APP.controller("taskController", function($scope, $websocket){
 		if(!$scope.socketState)
 			setSocketConnection();
 		var sendData = {
-			tasks: $scope.tasks,
-			formuid: $scope.formid
+			tasks: angular.copy($scope.tasks),
+			formuid: angular.copy($scope.formid)
 		};
 		console.log(JSON.stringify(sendData));
 		dataStream.send(JSON.stringify(sendData));
@@ -55,6 +55,11 @@ APP.controller("taskController", function($scope, $websocket){
 			$scope.socketState = false;
 			$scope.$apply();
 		});	
+		dataStream.onMessage(function(response){
+			var _scope = JSON.parse(response.data);
+			$scope.tasks = angular.copy(_scope.tasks);
+			$scope.$apply();
+		});
 	};
 
 });
